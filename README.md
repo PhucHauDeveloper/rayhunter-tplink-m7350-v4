@@ -19,7 +19,7 @@ TP-Link M7350 needs to be rooted first (we are developing rooting scripts), then
 
 | HW revision | rooting  | Rayhunter  |
 | :---:   | :---: | :---: |
-| v4 | yes, with [open-v4.sh](https://github.com/PhucHauDeveloper/tplink_m7350/blob/main/open-v4.sh) script or [tpown](https://github.com/PhucHauDeveloper/rayhunter-tplink-m7350/blob/installer/PoC.md#v4) | yes |
+| v4 | yes, with [open-v4.sh](https://github.com/PhucHauDeveloper/tplink_m7350/blob/main/open-v4.sh) script or [tpown](https://github.com/PhucHauDeveloper/rayhunter-tplink-m7350-v4/blob/installer/PoC.md#v4) | yes |
 
 Rayhunter may work on other Linux/Qualcomm devices (Orbic and M7350 both have Qualcomm MDM9225 chipset), but has not been tested on them (and you would need to root them first).
 
@@ -52,7 +52,7 @@ If you can not access this URL, disconnect your computer from VPN first, if that
 
 ***Important note***, after installation you need to turn off sharing the sd card via usb because this will cause the system to no longer mount the card as expected by rayhunter, access 192.18.0.1, login and go to Advanced, in the Storage Sharing section select Access Mode as By Wifi. Since you want that Rayhunter is autostarted at each boot of the TP-Link device, you need to set up `init.d` script. Currently we are using a "hack" - we modify `lighttpd2` script - but we are working on a proper Rayhunter `init.d` script.
 
-First copy [this script from this](https://github.com/PhucHauDeveloper/rayhunter-tplink-m7350-v4/blob/main/lighttpd) to your clipboard.
+First copy [this script from this](https://github.com/PhucHauDeveloper/rayhunter-tplink-m7350-v4-v4/blob/main/lighttpd) to your clipboard.
 
 Connect to the device:
 ```
