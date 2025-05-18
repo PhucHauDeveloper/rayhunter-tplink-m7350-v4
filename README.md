@@ -1,5 +1,5 @@
 ![Rayhunter Logo - An Orca taking a bite out of a cellular signal bar](https://www.eff.org/files/styles/media_browser_preview/public/banner_library/rayhunter-banner.png)
-# Rayhunter for TP-Link M7350
+# Rayhunter for TP-Link M7350 V4
 
 ![Tests](https://github.com/EFForg/rayhunter/actions/workflows/check-and-test.yml/badge.svg)
 
@@ -15,21 +15,10 @@ TP-Link M7350 mobile hotspot has on the other side been developed for European a
 
 TP-Link M7350 mobile hotspot has several hardware revisions - you can see your version on a sticker behind the battery - and our version of Rayhunter already works on the several versions of TP-Link M7350.
 
-TP-Link M7350 needs to be rooted first (we are developing rooting scripts), then Rayhunter can be installed on it. Please note that **original EFF version** of Rayhunter is currently not working on TP-Link devices, so you will need to install our modified version (see below for detailed instructions).
-
-| HW revision | rooting  | Rayhunter  |
-| :---:   | :---: | :---: |
-| v4 | yes, with [open-v4.sh](https://github.com/PhucHauDeveloper/tplink_m7350/blob/main/open-v4.sh) script or [tpown](https://github.com/PhucHauDeveloper/rayhunter-tplink-m7350-v4/blob/installer/PoC.md#v4) | yes |
-
-Rayhunter may work on other Linux/Qualcomm devices (Orbic and M7350 both have Qualcomm MDM9225 chipset), but has not been tested on them (and you would need to root them first).
-
 ## Installing Rayhunter
 
-TP-Link M7350 mobile hotspot needs to be rooted first. For rooting use one of the methods described in the table above. Also, you will need to install `ADB` on your computer first.
-
-After that, Rayhunter binary can be installed on the device.
-
-Manual procedure is the following (we assume you are using (Ubuntu/Debian) Linux environment for installation).
+Manual procedure is the following (we assume you are using (Ubuntu/Debian) Linux environment or Windows for installation).
+Note that you should use firmware M7350(EU)_V4_181220 or older. If you are on the latest version, downgrade to the old version by updating or using recovery. The reason is that the new version has fixed the POCs to get the shell.
 
 ### Prepare the files
 
