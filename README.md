@@ -19,16 +19,7 @@ TP-Link M7350 needs to be rooted first (we are developing rooting scripts), then
 
 | HW revision | rooting  | Rayhunter  |
 | :---:   | :---: | :---: |
-| v1 | no info               | no info            |
-| v2 | no info               | no info            |
-| v3 | yes, with [open-v3.sh](https://github.com/m0veax/tplink_m7350/blob/main/open-v3.sh) script  | yes              |
-| v3.2 | yes, witg [Rust installer](https://github.com/EFForg/rayhunter/pull/291)  | yes, but some users reported problems with mounting SD card   |
-| v4 | yes, with [open-v4.sh](https://github.com/m0veax/tplink_m7350/blob/main/open-v4.sh) script or [tpown](https://github.com/m0veax/rayhunter-tplink-m7350/blob/installer/PoC.md#v4) | yes |
-| v5 | yes, with [this script]([https://github.com/m0veax/rayhunter-tplink-m7350/blob/installer/PoC.md#v4) | yes |
-| v6.2 | yes (no further info)              | yes |
-| v7 | no info               | no info |
-| v8 | yes, with [Chrome hack](https://github.com/gaykitty/rayhunter/pull/2/files#diff-e215113dd2261f4fb6c9b417e8a36f8fde4440ce56d530376a17da89e9c9bbaeR249) | yes |
-| v9 | yes, with [Chrome hack](https://github.com/gaykitty/rayhunter/pull/2/files#diff-e215113dd2261f4fb6c9b417e8a36f8fde4440ce56d530376a17da89e9c9bbaeR249) | probably yes, but [ioctl changes](https://github.com/EFForg/rayhunter/pull/302) are needed |
+| v4 | yes, with [open-v4.sh](https://github.com/PhucHauDeveloper/tplink_m7350/blob/main/open-v4.sh) script or [tpown](https://github.com/PhucHauDeveloper/rayhunter-tplink-m7350/blob/installer/PoC.md#v4) | yes |
 
 Rayhunter may work on other Linux/Qualcomm devices (Orbic and M7350 both have Qualcomm MDM9225 chipset), but has not been tested on them (and you would need to root them first).
 
@@ -42,62 +33,26 @@ Manual procedure is the following (we assume you are using (Ubuntu/Debian) Linux
 
 ### Prepare the files
 
-**First**, download and extract [latest official release from EFF Github (currently v0.2.8)](https://github.com/EFForg/rayhunter/releases/tag/v0.2.8)):
-- download file `release.tar`,
-- *untar* that file and there will be a folder `release`.
+**First**, download and extract [latest official release from EFF Github (currently v0.3.0)](https://github.com/EFForg/rayhunter/releases/download/v0.3.0/rayhunter-v0.3.0.zip)):
+- download file `rayhunter-v0.3.0.zip`,
+- *unzip* that file and there will be a folder `rayhunter-v0.3.0`.
 
-Inside `release/` you will need:
-- `config.toml.example`
-- in directory `rayhunter-daemon-tplink` use `rayhunter-daemon` file
+Inside `rayhunter-v0.3.0` you will need:
+- run terminal/cmd/shell depending on the installer-`operating system` in the folder (windows, macos, ubuntu)
+- on terminal run `./installer tplink` or `installer.exe tplink` if you use Windows
+- wait until the device reboots and you're done
 
-`config.toml.example` is a text file and you need to edit it to use SD card instead of internal memory. Open the file with any plain text editor, for instance with `nano config.toml.example`.
+On your computer open web browser and try go to `http://192.168.0.1:8080`.
 
-Now change path for logs to `/media/card/qmdl`. **You must have SD card (SDHC, 32 GB max!) inserted in the device**. Path should be:
-```
-qmdl_store_path = "/media/card/qmdl"
-```
-`rayhunter-daemon` is a 32-bit ARM binary file that can run on a TP-Link M7350 device. `file` command shows something like this:
-```
-rayhunter-daemon: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=9f0436fecabffa79960bec1118a0e1ed55874d0e, for GNU/Linux 3.2.0, stripped
-```
-
-Make this file executable:
-``` 
-chmod +x rayhunter-daemon
-```
-
-### Copy files to the device
-
-Open two terminals:
-- terminal 1 (we will call it `adb shell`)
-- terminal 2 (we will call it `local`)
-
-**Terminal 1 (adb shell)**, type these commands:
-```
-adb shell
-mkdir /data/rayhunter
-```
-**Terminal 2 (local)**, go to the folder containig `config.toml.example` and `rayhunter-daemon` files, and copy those two files to the device:
-```
-adb push config.toml.example /data/rayhunter/config.toml
-adb push rayhunter-daemon /media/card/rayhunter-daemon
-```
-
-**Terminal 1 (adb)**, type this command:
-```
-/media/card/rayhunter-daemon /data/rayhunter/config.toml
-```
-On your computer open web browser and go to `http://192.168.0.1:8080`.
-
-If you can not access this URL, disconnect your computer from VPN first, if that does not help, try to disconnect from WiFi and/or Ethernet, so your only connection should be with USB cable to the TP-Link M7350 device. You also need to insert SIM card to the TP-link device if you want Rayhunter to work.
+If you can not access this URL, disconnect your computer from VPN first, if that does not help, try to disconnect from WiFi and/or Ethernet, so your only connection should be with USB cable to the TP-Link M7350 device. You also need to insert SIM card to the TP-link device if you want Rayhunter to work. If nothing works try switching Storage Sharing to Wifi as instructed in the autostart section below.
 
 ![Image](https://github.com/user-attachments/assets/ce6df40c-c87d-4adf-ac91-24082643bdeb)
 
 ### Autostart Rayhunter on the device
 
-Since you want that Rayhunter is autostarted at each boot of the TP-Link device, you need to set up `init.d` script. Currently we are using a "hack" - we modify `lighttpd2` script - but we are working on a proper Rayhunter `init.d` script.
+***Important note***, after installation you need to turn off sharing the sd card via usb because this will cause the system to no longer mount the card as expected by rayhunter, access 192.18.0.1, login and go to Advanced, in the Storage Sharing section select Access Mode as By Wifi. Since you want that Rayhunter is autostarted at each boot of the TP-Link device, you need to set up `init.d` script. Currently we are using a "hack" - we modify `lighttpd2` script - but we are working on a proper Rayhunter `init.d` script.
 
-First copy [this script from the repository](https://github.com/m0veax/rayhunter-tplink-m7350/blob/installer/dist_tplink/lighttpd) to your clipboard.
+First copy [this script from this](https://github.com/PhucHauDeveloper/rayhunter-tplink-m7350-v4/blob/main/lighttpd) to your clipboard.
 
 Connect to the device:
 ```
@@ -113,6 +68,7 @@ In `vi` editor press `esc`, `:`,  `i` and then paste the text of the script with
 
 Now remove the old file and replace it with the new one:
 ```
+chmod +x lighttpd2
 rm lighttpd
 mv lighttpd2 lighttpd
 reboot
@@ -122,7 +78,7 @@ After reboot, Rayhunter should be autostarted automatically. You can visit Rayhu
 
 ### Update to a new version
 
-For updating (when there will be new release), you just need to copy new `rayhunter-daemon` binary file to the device. Basically you need to `adb shell` to a device, kill currently running `rayhunter-daemon` process, delete old binary from `/media/card/` and `adb push` new binary to the device.
+If you want to update just download and run the command as when installing, download the latest version and run `./installer tplink`
 
 ## Usage
 
@@ -156,6 +112,22 @@ Unfortunately, the circumstances that might lead to a positive CSS signal are qu
  
 ### Does Rayhunter work outside of the US or Europe?
 **Yes**. TP-Link M7350 has been successfully tested in several European countries. The TP-Link M7350 is designed for European and Asian markets because it supports LTE bands used in those countries. However it will probably not work in North and Latin America, Australia and New Zealand, parts of Africa and on some networks in Japan.
+
+### 🛠️ Oh no, my device is not working!
+
+If your device has encountered an error, has an incorrect configuration, or no longer boots and gets stuck on the TP-Link logo — and you don’t have an EDL backup or any other backups — you can try recovering it using the method below:
+
+    Download the recovery firmware from this [link](https://community.tp-link.com/en/smart-home/forum/topic/659702).
+
+    After downloading the correct version, power off the device or remove the battery.
+
+    Run ProgramTool.exe and follow the instructions in the readme.txt file included in the archive.
+
+    In ProgramTool, select the folder containing the firmware named "M7350(EU) x.x".
+
+    Click Start, then connect the device to your computer via USB.
+
+If your issue is within the scope of Rayhunter's file modifications, this method can help you recover and restore functionality to your device.
 
 ## Development (compiling Rayhunter binary)
 
