@@ -116,16 +116,11 @@ Unfortunately, the circumstances that might lead to a positive CSS signal are qu
 ### 🛠️ Oh no, my device is not working!
 
 If your device has encountered an error, has an incorrect configuration, or no longer boots and gets stuck on the TP-Link logo — and you don’t have an EDL backup or any other backups — you can try recovering it using the method below:
-
-    Download the recovery firmware from this [link](https://community.tp-link.com/en/smart-home/forum/topic/659702).
-
-    After downloading the correct version, power off the device or remove the battery.
-
-    Run ProgramTool.exe and follow the instructions in the readme.txt file included in the archive.
-
-    In ProgramTool, select the folder containing the firmware named "M7350(EU) x.x".
-
-    Click Start, then connect the device to your computer via USB.
+- Download the recovery firmware from this [link](https://community.tp-link.com/en/smart-home/forum/topic/659702).
+- After downloading the correct version, power off the device or remove the battery.
+- Run ProgramTool.exe and follow the instructions in the readme.txt file included in the archive.
+- In ProgramTool, select the folder containing the firmware named "M7350(EU) x.x".
+- Click Start, then connect the device to your computer via USB.
 
 If your issue is within the scope of Rayhunter's file modifications, this method can help you recover and restore functionality to your device.
 
