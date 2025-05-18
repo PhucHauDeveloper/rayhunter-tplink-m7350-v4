@@ -18,7 +18,7 @@ TP-Link M7350 mobile hotspot has several hardware revisions - you can see your v
 ## Installing Rayhunter
 
 Manual procedure is the following (we assume you are using (Ubuntu/Debian) Linux environment or Windows for installation).
-Note that you should use firmware M7350(EU)_V4_181220 or older. If you are on the latest version, downgrade to the old version by updating or using recovery. The reason is that the new version has fixed the POCs to get the shell.
+Note that you should use firmware M7350(EU)_V4_181220 or older. If you are on the latest version, downgrade to the old version by updating or using recovery. The reason is that the new version has fixed the POCs to get the shell. After installation and you want to update to a newer firmware, it is still possible and you need to edit /etc/init.d/lighttpd for rayhunter to start automatically.
 
 ### Prepare the files
 
