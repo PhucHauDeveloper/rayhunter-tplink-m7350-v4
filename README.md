@@ -29,41 +29,14 @@ Note that you should use firmware M7350(EU)_V4_181220 or older. If you are on th
 Inside `rayhunter-v0.3.0` you will need:
 - run terminal/cmd/shell depending on the installer-`operating system` in the folder (windows, macos, ubuntu)
 - on terminal run `./installer tplink` or `installer.exe tplink` if you use Windows
-- wait until the device reboots and you're done
+- wait until the device reboots and continue telnet to the device, run usb_composition and enter 902D. Then run go.cmd to fix the corrupted release tree as well as add some nice features for me.
 
-On your computer open web browser and try go to `http://192.168.0.1:8080`.
+On your computer open web browser and try go to `http://192.168.0.1:8080` or you can login to the home page, now you will see the Rayhunter tab.
 
-If you can not access this URL, disconnect your computer from VPN first, if that does not help, try to disconnect from WiFi and/or Ethernet, so your only connection should be with USB cable to the TP-Link M7350 device. You also need to insert SIM card to the TP-link device if you want Rayhunter to work. If nothing works try switching Storage Sharing to Wifi as instructed in the autostart section below.
+If you can not access this URL, disconnect your computer from VPN first, if that does not help, try to disconnect from WiFi and/or Ethernet, so your only connection should be with USB cable to the TP-Link M7350 device. You also need to insert SIM card to the TP-link device if you want Rayhunter to work. If nothing works try access 192.18.0.1, login and go to Advanced, in the Storage Sharing section select Access Mode as By Wifi. 
+Now you can update firmware and remove telnet in Port Triggering in Advanced tab -> NAT Forwarding. you can now access by ssh more securely.
 
 ![Image](https://github.com/user-attachments/assets/ce6df40c-c87d-4adf-ac91-24082643bdeb)
-
-### Autostart Rayhunter on the device
-
-***Important note***, after installation you need to turn off sharing the sd card via usb because this will cause the system to no longer mount the card as expected by rayhunter, access 192.18.0.1, login and go to Advanced, in the Storage Sharing section select Access Mode as By Wifi. Since you want that Rayhunter is autostarted at each boot of the TP-Link device, you need to set up `init.d` script. Currently we are using a "hack" - we modify `lighttpd2` script - but we are working on a proper Rayhunter `init.d` script.
-
-First copy [this script from this](https://github.com/PhucHauDeveloper/rayhunter-tplink-m7350-v4-v4/blob/main/lighttpd) to your clipboard.
-
-Connect to the device:
-```
-adb shell 
-```
-
-Copy the content of the file to a new file (named `lighttpd2`): 
-```
-cd /etc/init.d/
-vi lighttpd2
-```
-In `vi` editor press `esc`, `:`,  `i` and then paste the text of the script with right click of the mouse.  `esc`, `w`,  `q` - write and save the file.
-
-Now remove the old file and replace it with the new one:
-```
-chmod +x lighttpd2
-rm lighttpd
-mv lighttpd2 lighttpd
-reboot
-```
-
-After reboot, Rayhunter should be autostarted automatically. You can visit Rayhunter WebUI with your web browser at `http://192.168.0.1:8080`.
 
 ### Update to a new version
 
