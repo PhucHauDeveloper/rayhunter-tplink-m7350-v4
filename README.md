@@ -1,129 +1,127 @@
 ![Rayhunter Logo - An Orca taking a bite out of a cellular signal bar](https://www.eff.org/files/styles/media_browser_preview/public/banner_library/rayhunter-banner.png)
+
 # Rayhunter for TP-Link M7350 V4
 
 ![Tests](https://github.com/EFForg/rayhunter/actions/workflows/check-and-test.yml/badge.svg)
 
-Rayhunter is an IMSI Catcher Catcher originally developed for the Orbic mobile hotspot (available in U. S. market) and now ported to TP-Link M7350 mobile hotspot (available in European market and worldwide).
+Rayhunter is an IMSI Catcher Catcher originally developed for the Orbic mobile hotspot (US market) and now ported to the TP-Link M7350 mobile hotspot (available worldwide).
 
 **THIS CODE IS PROOF OF CONCEPT, IS BEING ACTIVELY DEVELOPED AND SHOULD NOT BE RELIED UPON IN HIGH RISK SITUATIONS**
 
 ## The Hardware
 
-Rayhunter has been originally built and tested for the Orbic RC400L mobile hotspot, however Orbic works only on North American LTE Bands (B2/B4/B5/B13/B66) and can not be used in Europe.
-
-TP-Link M7350 mobile hotspot has on the other side been developed for European and Asian markets (it uses LTE Bands B1/B3/B7/B8/B20) and currently we are porting Rayhunter to TP-Link M7350. TP-Link M7350 should also work in Africa, Oceania and South America, but with limited compatibility, because some network in those areas use Bands that are not supported by it.
-
-TP-Link M7350 mobile hotspot has several hardware revisions - you can see your version on a sticker behind the battery - and our version of Rayhunter already works on the several versions of TP-Link M7350.
+TP-Link M7350 mobile hotspot has several hardware revisions. You can check your version on a sticker behind the battery. Rayhunter has been tested and confirmed working on multiple versions of the TP-Link M7350.
 
 ## Installing Rayhunter
 
-Manual procedure is the following (we assume you are using (Ubuntu/Debian) Linux environment or Windows for installation).
-Note that you should use firmware M7350(EU)_V4_181220 or older. If you are on the latest version, downgrade to the old version by updating or using recovery. The reason is that the new version has fixed the POCs to get the shell. After installation and you want to update to a newer firmware, it is still possible and you need to edit /etc/init.d/lighttpd for rayhunter to start automatically.
+You can install Rayhunter easily by downloading and running the installation script.
 
-### Prepare the files
+### Quick Setup
 
-**First**, download and extract [latest official release from EFF Github (currently v0.3.0)](https://github.com/EFForg/rayhunter/releases/download/v0.3.0/rayhunter-v0.3.0.zip)):
-- download file `rayhunter-v0.3.0.zip`,
-- *unzip* that file and there will be a folder `rayhunter-v0.3.0`.
+1. Download the latest release from the [Releases Page](https://github.com/EFForg/rayhunter/releases).
+2. Extract the archive.
+3. Open the extracted folder.
+4. Run the `install.cmd` (Windows).
+5. Follow the on-screen instructions.
 
-Inside `rayhunter-v0.3.0` you will need:
-- run terminal/cmd/shell depending on the installer-`operating system` in the folder (windows, macos, ubuntu)
-- on terminal run `./installer tplink` or `installer.exe tplink` if you use Windows
-- wait until the device reboots and continue telnet to the device, run usb_composition and enter 902D. Then run go.cmd to fix the corrupted release tree as well as add some nice features for me.
+After installation, the device will reboot and launch Rayhunter automatically. No manual telnet setup or firmware downgrades are required.
 
-On your computer open web browser and try go to `http://192.168.0.1:8080` or you can login to the home page, now you will see the Rayhunter tab.
+You can now access Rayhunter's Web UI at:
 
-If you can not access this URL, disconnect your computer from VPN first, if that does not help, try to disconnect from WiFi and/or Ethernet, so your only connection should be with USB cable to the TP-Link M7350 device. You also need to insert SIM card to the TP-link device if you want Rayhunter to work. If nothing works try access 192.18.0.1, login and go to Advanced, in the Storage Sharing section select Access Mode as By Wifi. 
-Now you can update firmware and remove telnet in Port Triggering in Advanced tab -> NAT Forwarding. you can now access by ssh more securely.
+* `http://192.168.0.1:8080`
 
-![Image](https://github.com/user-attachments/assets/ce6df40c-c87d-4adf-ac91-24082643bdeb)
+### 🚀 What's New in This Fork
 
-### Update to a new version
+This customized fork brings several usability and performance improvements over the original Rayhunter version:
 
-If you want to update just download and run the command as when installing, download the latest version and run `./installer tplink`
+    ✅ Web UI Integrated Directly into the TP-Link Admin Page
+    You can access Rayhunter controls directly from the TP-Link web interface at http://192.168.0.1, no separate port or web UI required.
 
+    ✅ Physical Button to Toggle Rayhunter
+    Press and hold the top button on your TP-Link M7350 for 3 seconds to quickly enable or disable Rayhunter without needing a web or shell interface.
+
+    ✅ Live Status Indicator on LCD Screen
+    After the carrier name, if you see a #: symbol, Rayhunter is active. If this symbol is missing, Rayhunter is inactive.
+
+    ✅ SSH Enabled, Telnet Disabled After Installation
+    For better security, SSH is enabled by default for remote access, while Telnet is automatically disabled once the installation is complete.
+
+    ✅ Built-in TTL Modification Tool (ttlset)
+    This fork includes ttlset, allowing you to modify TTL values easily—useful for bypassing carrier tethering detection.
+
+📌 These enhancements are designed to improve user experience and security while keeping installation simple and accessible.
 ## Usage
 
 <img src="https://github.com/user-attachments/assets/03f78f43-53f9-44de-a122-2dd01dddc369" width=250>
 
-Once installed, Rayhunter will run automatically whenever your device is running. It serves a web UI that provides some basic controls, such as being able to start/stop recordings, download captures, and view heuristic analyses of captures. You can access this UI in one of two ways:
+Once installed, Rayhunter will run automatically. It serves a web UI that provides basic controls, such as:
 
-1. **Over WiFi**: Connect your phone/laptop to the TP-Link M7350 WiFi network and visit `http://192.168.0.1:8080` (click past your browser warning you about the connection not being secure, Rayhunter doesn't have HTTPS yet!)
+* Starting/stopping recordings
+* Downloading captures
+* Viewing heuristic analyses of captures
 
-2. **Over USB**: Connect the Orbic device to your laptop via USB, then visit `http://192.168.0.1:8080`.
+You can access the UI in one of two ways:
 
-Please note that if you are using VPN, access to Rayhunter's URL may not work.
+1. **Over WiFi**: Connect your phone/laptop to the TP-Link M7350 WiFi network and visit `http://192.168.0.1:8080`
+2. **Over USB**: Connect the device via USB and visit the same address.
 
-If Rayhunter detects something, it will draw red line:
+**Note:** If you are using VPN, you may not be able to access the UI.
+
+If Rayhunter detects something, it will highlight it in the UI with a red line and logs:
 
 <img src="https://github.com/user-attachments/assets/4202d40c-0f7b-4ac4-a1a5-39e02b45de51" width=250>
-
-In WebUI you can see the logs:
 
 <img src="https://github.com/user-attachments/assets/96e559c9-3ec7-4fdd-af19-5a2ebd16a0fb" width=250>
 
 ## Frequently Asked Questions
 
-### Do I need an active SIM card to use Rayhunter?
-**It Depends**. Operation of Rayhunter does require the insertion of a SIM card into the device, but whether that SIM card has to be currently active for our tests to work is still under investigation. If you want to use the device as a hotspot in addition to a research device an active plan would of course be necessary, however we have not done enough testing yet to know whether an active subscription is required for detection. If you want to test the device with an inactive SIM card, we would certainly be interested in seeing any data you collect, and especially any runs that trigger an alert!
- 
-### Help, Rayhunter's line is red! What should I do?
-Unfortunately, the circumstances that might lead to a positive CSS signal are quite varied, so we don't have a universal recommendation for how to deal with the a positive signal. You might also want to turn off your phone until you are out of the area (or put it on airplane mode,) and tell your friends to do the same!
+### Do I need an active SIM card?
 
- Please feel free to contact an EFF technologist with more information & a copy of the QMDL in question at [info@eff.org](mailto:info@eff.org) or to [Signal](https://signal.me/#eu/HZbPPED5LyMkbTxJsG2PtWc2TXxPUR1OxBMcJGLOPeeCDGPuaTpOi5cfGRY6RrGf) (preferred way). Please note that this file may contain sensitive information such as your IMSI and the unique IDs of cell towers you were near which could be used to ascertain your location at the time so for sending through e-mail consider using encryption.
- 
-### Does Rayhunter work outside of the US or Europe?
-**Yes**. TP-Link M7350 has been successfully tested in several European countries. The TP-Link M7350 is designed for European and Asian markets because it supports LTE bands used in those countries. However it will probably not work in North and Latin America, Australia and New Zealand, parts of Africa and on some networks in Japan.
+**Optional.** Some functionality may require a SIM card, but not necessarily an active one. You are encouraged to test with or without and share findings with the Rayhunter team.
 
-### 🛠️ Oh no, my device is not working!
+### What if Rayhunter detects something?
 
-If your device has encountered an error, has an incorrect configuration, or no longer boots and gets stuck on the TP-Link logo — and you don’t have an EDL backup or any other backups — you can try recovering it using the method below:
-- Download the recovery firmware from this [link](https://community.tp-link.com/en/smart-home/forum/topic/659702).
-- After downloading the correct version, power off the device or remove the battery.
-- Run ProgramTool.exe and follow the instructions in the readme.txt file included in the archive.
-- In ProgramTool, select the folder containing the firmware named "M7350(EU) x.x".
-- Click Start, then connect the device to your computer via USB.
+You may consider turning off your phone or switching to airplane mode if suspicious activity is detected. Please share your data with [EFF](mailto:info@eff.org) (securely, if needed).
 
-If your issue is within the scope of Rayhunter's file modifications, this method can help you recover and restore functionality to your device.
+### Does Rayhunter work outside the US/Europe?
+
+Yes. TP-Link M7350 is compatible with many LTE bands in Europe and Asia, and should work in most parts of Africa and South America.
 
 ## Development (compiling Rayhunter binary)
 
-Install `Rust` and cross compiling dependences:
-```
+Install dependencies:
+
+```bash
 sudo apt install curl build-essential libc6-armhf-cross libc6-dev-armhf-cross gcc-arm-linux-gnueabihf rustup cargo
 rustup default stable
 rustup target add x86_64-unknown-linux-gnu
 rustup target add armv7-unknown-linux-gnueabihf
 ```
 
-Clone the repository:
-```
-git clone https://github.com/NAME_OF_REPOSITORY
-cd NAME_OF_REPOSITORY
-```
+Clone and build:
 
-Compile binary:
-```
+```bash
+git clone https://github.com/EFForg/rayhunter
+cd rayhunter
 cargo build --target armv7-unknown-linux-gnueabihf --release
 ```
-Compiled binaries are then in `target/armv7-unknown-linux-gnueabihf/release/`:
+
+Binaries are located in:
+
 ```
-cd target/armv7-unknown-linux-gnueabihf/release/
-file rayhunter-daemon
-
-rayhunter-daemon: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=be93b0df122db6d577a2dd2da231d01ddb351ba9, for GNU/Linux 3.2.0, stripped
+target/armv7-unknown-linux-gnueabihf/release/
 ```
 
-Building documentation locally:
-`RUSTDOCFLAGS="--cfg docsrs" cargo doc --no-deps --all-features  --open`
+Generate documentation:
 
-Documentation is then in `target/doc/rayhunter/index.html`.
+```bash
+RUSTDOCFLAGS="--cfg docsrs" cargo doc --no-deps --all-features --open
+```
 
 ## LEGAL DISCLAIMER
-Use this program at your own risk. We believe running this program does not currently violate any laws or regulations in the United States or in Europe.
 
-The reason for that is, that this software uses Qualcomm DIAG kernel driver (`DIAG_CHAR`) to analyze **your own network traffic** that is processed by baseband chip on your device. So, there is **no interception of traffic** of other mobile subscribers and **no unauthorized firmware modifications** to the baseband chip which would normally require a new certification. Rayhunter just enables you to see and analyse all network traffic from the mobile network which is usually hidden from you.
+Use at your own risk. Rayhunter does **not** intercept third-party traffic or modify baseband firmware. It uses Qualcomm DIAG to access **your own device's** diagnostic info.
 
-However, we are not responsible for civil or criminal liability resulting from the use of this software. Please consult with an attorney in your country to help you assess the legal risks of running this program.
+That said, please verify legality in your own jurisdiction. The authors disclaim responsibility for misuse or liability.
 
 *Good Hunting!*
